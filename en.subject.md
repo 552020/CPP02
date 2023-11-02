@@ -301,6 +301,8 @@ return 0;
 ```
 
 Should output something similar to:
+
+```
 $> ./a.out
 Default constructor called
 Int constructor called
@@ -323,6 +325,7 @@ Destructor called
 Destructor called
 Destructor called
 $>
+```
 
 9
 
