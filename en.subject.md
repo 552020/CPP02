@@ -259,38 +259,31 @@ Add these four public overloaded member functions to your class:
 • A static member function max that takes as parameters two references to constant fixed-point numbers, and returns a reference to the greatest one.
 
 It’s up to you to test every feature of your class. However, running the code below:
+
+```c++
+#include "Fixed.hpp"
 #include <iostream>
-int
 
-main( void ) {
-Fixed
-Fixed const
-std::cout
-std::cout
-std::cout
-std::cout
-std::cout
+int main(void) {
+  Fixed a;
+  Fixed const b(Fixed(5.05f) * Fixed(2));
 
-<<
-<<
-<<
-<<
-<<
+  std::cout << a << std::endl;
+  std::cout << ++a << std::endl;
+  std::cout << a << std::endl;
+  std::cout << a++ << std::endl;
+  std::cout << a << std::endl;
 
-a;
-b( Fixed( 5.05f ) \* Fixed( 2 ) );
-a << std::endl;
-++a << std::endl;
-a << std::endl;
-a++ << std::endl;
-a << std::endl;
+  std::cout << b << std::endl;
 
-std::cout << b << std::endl;
-std::cout << Fixed::max( a, b ) << std::endl;
-return 0;
+  std::cout << Fixed::max(a, b) << std::endl;
+  return (0);
 }
+```
 
 Should output something like (for greater readability, the constructor/destructor messages are removed in the example below):
+
+```
 $> ./a.out
 0
 0.00390625
@@ -300,9 +293,9 @@ $> ./a.out
 10.1016
 10.1016
 $>
+```
 
-If you ever do a division by 0, it is acceptable that the program
-crashes
+If you ever do a division by 0, it is acceptable that the program crashes
 
 ## Chapter VII
 
@@ -330,8 +323,7 @@ a 2D point:
 ◦ Anything else useful.
 • Public members:
 ◦ A default constructor that initializes x and y to 0.
-◦ A constructor that takes as parameters two constant floating-point numbers.
-It initializes x and y with those parameters.
+◦ A constructor that takes as parameters two constant floating-point numbers. It initializes x and y with those parameters.
 ◦ A copy constructor.
 ◦ A copy assignment operator overload.
 ◦ A destructor.
