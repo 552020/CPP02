@@ -3,5 +3,9 @@
     "activityBar.background": "#28197E",
     "titleBar.activeBackground": "#3924B0",
     "titleBar.activeForeground": "#FAF9FE"
+  },
+  "files.associations": {
+    ".clang-format-google": "c",
+    "ostream": "cpp"
   }
 }

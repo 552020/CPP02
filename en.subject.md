@@ -185,117 +185,28 @@ Add the following public constructors and public member functions to your class:
 Running this code:
 
 ```c++
+#include "Fixed.hpp"
 #include <iostream>
-int
 
-main( void ) {
-Fixed
-a;
-Fixed const b( 10 );
-Fixed const c( 42.42f );
-Fixed const d( b );
-a = Fixed( 1234.4321f );
-std::cout
-std::cout
-std::cout
-std::cout
+int main(void) {
+  Fixed a;
+  Fixed const b(10);
+  Fixed const c(42.42f);
+  Fixed const d(b);
 
-<<
-<<
-<<
-<<
+  a = Fixed(1234.4321f);
 
-"a
-"b
-"c
-"d
+  std::cout << "a is " << a << std::endl;
+  std::cout << "b is " << b << std::endl;
+  std::cout << "c is " << c << std::endl;
+  std::cout << "d is " << d << std::endl;
 
-is
-is
-is
-is
+  std::cout << "a is " << a.toInt() << " as integer " << std::endl;
+  std::cout << "b is " << b.toInt() << " as integer " << std::endl;
+  std::cout << "c is " << c.toInt() << " as integer " << std::endl;
+  std::cout << "d is " << d.toInt() << " as integer " << std::endl;
 
-"
-"
-"
-"
-
-<<
-<<
-<<
-<<
-
-a
-b
-c
-d
-
-<<
-<<
-<<
-<<
-
-std::endl;
-std::endl;
-std::endl;
-std::endl;
-
-std::cout
-std::cout
-std::cout
-std::cout
-
-<<
-<<
-<<
-<<
-
-"a
-"b
-"c
-"d
-
-is
-is
-is
-is
-
-"
-"
-"
-"
-
-<<
-<<
-<<
-<<
-
-a.toInt()
-b.toInt()
-c.toInt()
-d.toInt()
-
-<<
-<<
-<<
-<<
-
-"
-"
-"
-"
-
-as
-as
-as
-as
-
-integer"
-integer"
-integer"
-integer"
-
-return 0;
+  return (0);
 }
 
 ```
@@ -327,22 +238,11 @@ Destructor called
 $>
 ```
 
-9
+### Chapter VI
 
-<<
-<<
-<<
-<<
-
-std::endl;
-std::endl;
-std::endl;
-std::endl;
-
-Chapter VI
 Exercise 02: Now we’re talking
 Exercise 02
-Now we’re talking
+**Now we’re talking**
 Turn-in directory : ex02/
 Files to turn in : Makefile, main.cpp, Fixed.{h, hpp}, Fixed.cpp
 Allowed functions : roundf (from <cmath>)
@@ -350,26 +250,13 @@ Allowed functions : roundf (from <cmath>)
 Add public member functions to your class to overload the following operators:
 • The 6 comparison operators: >, <, >=, <=, == and !=.
 • The 4 arithmetic operators: +, -, \*, and /.
-• The 4 increment/decrement (pre-increment and post-increment, pre-decrement and
-post-decrement) operators, that will increase or decrease the fixed-point value from
-the smallest representable ϵ such as 1 + ϵ > 1.
+• The 4 increment/decrement (pre-increment and post-increment, pre-decrement and post-decrement) operators, that will increase or decrease the fixed-point value from the smallest representable ϵ such as 1 + ϵ > 1.
 
 Add these four public overloaded member functions to your class:
-• A static member function min that takes as parameters two references on fixed-point
-numbers, and returns a reference to the smallest one.
-• A static member function min that takes as parameters two references to constant
-fixed-point numbers, and returns a reference to the smallest one.
-• A static member function max that takes as parameters two references on fixed-point
-numbers, and returns a reference to the greatest one.
-• A static member function max that takes as parameters two references to constant
-fixed-point numbers, and returns a reference to the greatest one.
-
-10
-
-Ad-hoc polymorphism, operator overloading
-and Orthodox Canonical class form
-
-C++ - Module 02
+• A static member function min that takes as parameters two references on fixed-point numbers, and returns a reference to the smallest one.
+• A static member function min that takes as parameters two references to constant fixed-point numbers, and returns a reference to the smallest one.
+• A static member function max that takes as parameters two references on fixed-point numbers, and returns a reference to the greatest one.
+• A static member function max that takes as parameters two references to constant fixed-point numbers, and returns a reference to the greatest one.
 
 It’s up to you to test every feature of your class. However, running the code below:
 #include <iostream>
@@ -417,35 +304,23 @@ $>
 If you ever do a division by 0, it is acceptable that the program
 crashes
 
-11
+## Chapter VII
 
-Chapter VII
 Exercise 03: BSP
 Exercise 03
-BSP
+**BSP**
 Turn-in directory : ex03/
 Files to turn in : Makefile, main.cpp, Fixed.{h, hpp}, Fixed.cpp,
 Point.{h, hpp}, Point.cpp, bsp.cpp
 Allowed functions : roundf (from <cmath>)
 
-Now that you have a functional Fixed class, it would be nice to use it.
-Implement a function which indicates whether a point is inside of a triangle or not.
-Very useful, isn’t it?
+Now that you have a functional Fixed class, it would be nice to use it. Implement a function which indicates whether a point is inside of a triangle or not. Very useful, isn’t it?
 
 BSP stands for Binary space partitioning.
 
 You are welcome.
 
 You can pass this module without doing exercise 03.
-
-12
-
-:)
-
-C++ - Module 02
-
-Ad-hoc polymorphism, operator overloading
-and Orthodox Canonical class form
 
 Let’s start by creating the class Point in Orthodox Canonical Form that represents
 a 2D point:
