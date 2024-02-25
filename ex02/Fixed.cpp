@@ -35,7 +35,11 @@ Fixed &Fixed::operator=(const Fixed &other)
 	}
 	return *this;
 }
-// Overloading comparison operator >
+
+// Note the difference between this overlaoading function and the overloading of the << operator. This one is a member
+// function and takes only one argument, the other is defined outside the class and takes two arguments. And this is
+// beacasue the left operand is the object itself, and the right operand is the other object. Overloading comparison
+// operator >
 bool Fixed::operator>(const Fixed &other) const
 {
 	return _rawBitsValue > other.getRawBits();
@@ -65,33 +69,23 @@ bool Fixed::operator!=(const Fixed &other) const
 {
 	return _rawBitsValue != other.getRawBits();
 }
-// Overloading arithmetic operator +
+/* NEW APPROACH */
+
 Fixed Fixed::operator+(const Fixed &other) const
 {
-	Fixed result;
-	result.setRawBits(_rawBitsValue + other.getRawBits());
-	return result;
+	return Fixed(this->toFloat() + other.toFloat());
 }
-// Overloading arithmetic operator -
+
 Fixed Fixed::operator-(const Fixed &other) const
 {
-	Fixed result;
-	result.setRawBits(_rawBitsValue - other.getRawBits());
-	return result;
+	return Fixed(this->toFloat() - other.toFloat());
 }
-// Overloading arithmetic operator *
+
 Fixed Fixed::operator*(const Fixed &other) const
 {
-	Fixed fixedResult;
-	long long int thisRawLong = static_cast<long long int>(_rawBitsValue);
-	long long int otherRawLong = static_cast<long long int>(other.getRawBits());
-	long long int multipliedValue = (thisRawLong * otherRawLong);
-	long long int scaledResult = multipliedValue >> _fractionalBits;
-	int result = static_cast<int>(scaledResult);
-	fixedResult.setRawBits(result);
-	return fixedResult;
+	return Fixed(this->toFloat() * other.toFloat());
 }
-// Overloading arithmetic operator /
+
 Fixed Fixed::operator/(const Fixed &other) const
 {
 	// Check for division by zero
@@ -101,23 +95,64 @@ Fixed Fixed::operator/(const Fixed &other) const
 		std::cerr << "Error: Division by zero." << std::endl;
 		return Fixed(); // or handle differently
 	}
-	Fixed fixedResult;
-	// Scale up the dividend by the number of fractional bits
-	long long int thisRawLong = static_cast<long long int>(_rawBitsValue) << _fractionalBits;
-	// Convert divisor to long long
-	long long int otherRawLong = static_cast<long long int>(other.getRawBits());
-	// Perform the division
-	long long int dividedValue = thisRawLong / otherRawLong;
-	int result = static_cast<int>(dividedValue);
-	fixedResult.setRawBits(result);
-	return fixedResult;
+	return Fixed(this->toFloat() / other.toFloat());
 }
+/* OLD APPROACH */
+// // Overloading arithmetic operator +
+// Fixed Fixed::operator+(const Fixed &other) const
+// {
+// 	Fixed result;
+// 	result.setRawBits(_rawBitsValue + other.getRawBits());
+// 	return result;
+// }
+// // Overloading arithmetic operator -
+// Fixed Fixed::operator-(const Fixed &other) const
+// {
+// 	Fixed result;
+// 	result.setRawBits(_rawBitsValue - other.getRawBits());
+// 	return result;
+// }
+// // Overloading arithmetic operator *
+// Fixed Fixed::operator*(const Fixed &other) const
+// {
+// 	Fixed fixedResult;
+// 	long long int thisRawLong = static_cast<long long int>(_rawBitsValue);
+// 	long long int otherRawLong = static_cast<long long int>(other.getRawBits());
+// 	long long int multipliedValue = (thisRawLong * otherRawLong);
+// 	long long int scaledResult = multipliedValue >> _fractionalBits;
+// 	int result = static_cast<int>(scaledResult);
+// 	fixedResult.setRawBits(result);
+// 	return fixedResult;
+// }
+// // Overloading arithmetic operator /
+// Fixed Fixed::operator/(const Fixed &other) const
+// {
+// 	// Check for division by zero
+// 	if (other.getRawBits() == 0)
+// 	{
+// 		// Handle division by zero error or throw an exception
+// 		std::cerr << "Error: Division by zero." << std::endl;
+// 		return Fixed(); // or handle differently
+// 	}
+// 	Fixed fixedResult;
+// 	// Scale up the dividend by the number of fractional bits
+// 	long long int thisRawLong = static_cast<long long int>(_rawBitsValue) << _fractionalBits;
+// 	// Convert divisor to long long
+// 	long long int otherRawLong = static_cast<long long int>(other.getRawBits());
+// 	// Perform the division
+// 	long long int dividedValue = thisRawLong / otherRawLong;
+// 	int result = static_cast<int>(dividedValue);
+// 	fixedResult.setRawBits(result);
+// 	return fixedResult;
+// }
 // Overloading pre-increment operator
+
 Fixed &Fixed::operator++()
 {
 	this->_rawBitsValue += 1;
 	return *this;
 }
+// Post fix have the dummy int parameter
 // Overloading post-increment operator
 Fixed Fixed::operator++(int)
 {
@@ -131,6 +166,7 @@ Fixed &Fixed::operator--()
 	this->_rawBitsValue -= 1;
 	return *this;
 }
+// POst fix have the dummy int parameter
 // Overloading post-decrement operator
 Fixed Fixed::operator--(int)
 {

@@ -18,6 +18,7 @@ class Fixed
 	Fixed(const Fixed &other);
 	// Copy assignment operator
 	Fixed &operator=(const Fixed &other);
+	/* COMPARISON OPERATORS */
 	// Overloading comparison operator >
 	bool operator>(const Fixed &other) const;
 	// Overloading comparison operator <
