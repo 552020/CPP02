@@ -3,14 +3,13 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Target executable name
-TARGET = fixed 
+TARGET = orthodox 
 
 # Source and Object Files
 SRCS = main.cpp Fixed.cpp 
 
 # Create an obj directory if it doesn't exist
 OBJDIR = obj
-# $(shell mkdir -p $(OBJDIR))
 
 # Generate object files from source files in the obj directory
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))

@@ -14,6 +14,7 @@
   - [ ] Default Destructor
 
 - [ ] Operator overloading
+- [ ] Fixed point numbers vs Floating point numbers
 
 The main.cpp is given, in the subject.
 
@@ -23,6 +24,16 @@ The main.cpp is given, in the subject.
 - [Copy constructor](<https://en.wikipedia.org/wiki/Copy_constructor_(C%2B%2B)>)
 - [Copy assignment operator](<https://en.wikipedia.org/wiki/Assignment_operator_(C%2B%2B)>)
 - [Destructor](<https://en.wikipedia.org/wiki/Destructor_(computer_programming)>)
+
+### static const int \_fractionalBits
+
+We are required to define the number of fractional bits as `static const int`. If the fractional bits were not declared as static within the Fixed class, it would imply that each instance of the Fixed class could potentially have its own value for fractional bits.
+
+The **static** keyword in C++ indicates that the member variable or method belongs to the class itself, rather than to any specific instance of the class.
+
+A static member variable is shared among all instances of the class. It exists independently of any class instances, meaning that it is created when the program starts and destroyed when the program ends, regardless of whether any objects of the class are created or destroyed in the meantime.
+
+static member variables and methods can be accessed using the class name instead of an instance of the class.
 
 ## 02 Towards a more useful fixed-point number class
 
@@ -90,3 +101,20 @@ Operator overloading is a specific case of ad-hoc polymorphism where the specifi
 ### Resources
 
 - [Polymorphism - Wiki](<https://en.wikipedia.org/wiki/Polymorphism_(computer_science)>)
+
+### Varia
+
+#### Order-only prerequisite operator `|`
+
+This is about the line `$(OBJS): | $(OBJDIR)` in the Makefile.
+
+The syntax `$(OBJS): | $(OBJDIR)` in the Makefile is an order-only prerequisite in make. In make, prerequisites are usually files that must exist and be up-to-date before the target can be generated. However, there are cases where the timestamp of a prerequisite should not cause the target to be considered out-of-date; this is where order-only prerequisites come into play.
+
+An order-only prerequisite is specified after a `|` character in the prerequisites list. This tells `make` that the target (`$(OBJS)` in this case) does not directly depend on the file timestamps of these prerequisites (`$(OBJDIR)`). Instead, it only matters that these prerequisites exist before the target is made. In other words, `make` ensures that the order-only prerequisites are made (if necessary) before the target, but changes to the prerequisites' timestamps will not cause the target to be remade.
+
+`$(OBJS): | $(OBJDIR)` means:
+
+- The object files (`$(OBJS)`) require the directory `$(OBJDIR)` to exist before they are built.
+- The existence and up-to-dateness of `$(OBJDIR)` itself does not influence whether the object files need to be rebuilt. As long as the directory exists, `make` does not care about its timestamp when considering whether to rebuild `$(OBJS)`.
+
+This is useful in this context because you want to make sure the directory where the object files will be stored exists (`$(OBJDIR)`) before compiling the source files into object files. However, once this directory exists, its modification time should not trigger a rebuild of the object files. This prevents unnecessary recompilations when only the directory's timestamp changes without any changes to the source files.
