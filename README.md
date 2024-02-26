@@ -1,14 +1,28 @@
 # CPP_Module_02
 
+- Ad-hoc polymorphism
+- operator overloading
+- Orthodox Canonical Form
+
 ## 01 My First Class in Orthodox Canonical Form
 
 - [ ] Orthodox Canonical Form
+
   - [ ] Default construstor
   - [ ] Copy Constructor
   - [ ] Copy assignment operator
   - [ ] Default Destructor
 
+- [ ] Operator overloading
+
 The main.cpp is given, in the subject.
+
+### The orthodox canonical form and the rule of three
+
+- [Rule of three](<https://en.wikipedia.org/wiki/Rule_of_three_(C%2B%2B_programming)>)
+- [Copy constructor](<https://en.wikipedia.org/wiki/Copy_constructor_(C%2B%2B)>)
+- [Copy assignment operator](<https://en.wikipedia.org/wiki/Assignment_operator_(C%2B%2B)>)
+- [Destructor](<https://en.wikipedia.org/wiki/Destructor_(computer_programming)>)
 
 ## 02 Towards a more useful fixed-point number class
 
@@ -53,3 +67,26 @@ Here’s a breakdown for other kinds of operations:
      - A non-`const` object can yield a non-`const` reference, allowing modifications.
 
 In summary, the necessity for both `const` and non-`const` versions of a function is relatively rare and is generally confined to functions that return references to their input objects. For other types of operations, standard practices for `const` correctness (such as marking member functions that do not modify the object's state as `const`) are sufficient to manage const and non-const contexts appropriately.
+
+## Concepts
+
+### Ad-hoc polymorphism
+
+**Polymorphism**, in programming language theory and type theory, is the use of a single symbol to represent multiple different types. In OOP, polymorphism is the provision of a single interface to entities of different types. The concept is borrowed from a principle in biology where an organism or species can have many different forms or stages.
+
+There are three (or four) different types of polymorphism:
+
+- Subtype polymorphism
+- Ad-hoc polymorphism
+- Parametric polymorphism
+- Coercion polymorphism
+
+**Ad-hoc polymorphism** is basically the possibility in C++ of having functions (or operators) with the same name but with different prototypes/signature, i.e. with different parameters (numbers and type) and different return values. This is not possible in C. Ad-hoc polymorphism is 'ad-hoc' in respect to the subtype polymorphism.
+
+### Operator overoading
+
+Operator overloading is a specific case of ad-hoc polymorphism where the specific functions being overloaded are the standard operators (such as +, -, \*, /, etc.). In C++, you can provide custom implementations for these operators for your own types (classes or structs). This means you can define what happens when you use these operators on instances of your custom types. For example, you can define how two objects of a "Complex Number" class are added together using the + operator. Operator overloading allows for a more intuitive interaction with objects, mimicking the behavior of built-in types. Operator overloading is a specific case of polymorphism.
+
+### Resources
+
+- [Polymorphism - Wiki](<https://en.wikipedia.org/wiki/Polymorphism_(computer_science)>)
