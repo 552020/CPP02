@@ -10,13 +10,9 @@ class Point
 	Point &operator=(const Point &);
 
   public:
-	Point() : _x(0), _y(0)
-	{
-	}
-	Point(const float x, const float y) : _x(x), _y(y) {};
-	Point(const Point &other) : _x(other._x), _y(other._y)
-	{
-	}
+	Point();
+	Point(const float x, const float y);
+	Point(const Point &other);
 	~Point();
 	// Getters for x and y
 	Fixed const &getX() const;

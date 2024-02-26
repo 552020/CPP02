@@ -6,11 +6,11 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 TARGET = fixed 
 
 # Source and Object Files
-SRCS = main.cpp Fixed.cpp
+SRCS = main.cpp Fixed.cpp Point.cpp
 
 # Create an obj directory if it doesn't exist
 OBJDIR = obj
-$(shell mkdir -p $(OBJDIR))
+# $(shell mkdir -p $(OBJDIR))
 
 # Generate object files from source files in the obj directory
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
@@ -22,13 +22,19 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
 
+# Ensure the obj directory exists before compiling object files
+$(OBJS): | $(OBJDIR)
+
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
+
 # Compile source files to object files in the obj directory
 $(OBJDIR)/%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJDIR)
-	rm -f $(OBJS) $(TARGET)
+	rm -f  $(TARGET)
 
 fclean: clean
 	rm -f $(TARGET)
