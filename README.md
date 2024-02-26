@@ -82,6 +82,13 @@ Compare the function that overload the << operator and the member functions whic
 - [ ]
 - [ ]
 
+### Overloading the << stream insertion vs Fixed operations
+
+// Note the difference between this overlaoading function and the overloading of the << operator. This one is a member
+// function and takes only one argument, the other is defined outside the class and takes two arguments. And this is
+// beacasue the left operand is the object itself, and the right operand is the other object. Overloading comparison
+// operator >
+
 ### Arithmetic operations
 
 The approach of converting fixed-point values to floating-point for arithmetic operations and then converting them back offers several advantages, making it an easier or "better" approach for certain applications. This methodology simplifies the implementation of arithmetic operations by leveraging the inherent capabilities of floating-point arithmetic, such as automatic handling of underflow and overflow, and more intuitive handling of multiplication and division, which can be complex in fixed-point arithmetic due to the need for precise scaling and bit manipulation.
@@ -91,6 +98,57 @@ Using floating-point arithmetic abstracts away the manual scaling and bit shifti
 Furthermore, this approach automatically accommodates a wider range of values and more complex mathematical operations without the developer needing to manually manage scaling factors or worry about precision loss in intermediate steps, as floating-point numbers have a much larger dynamic range and precision than integers of the same bit width.
 
 However, it's important to note that while this method provides ease of implementation and other benefits, it might introduce slight rounding errors due to the nature of floating-point representation. Therefore, the choice between pure fixed-point arithmetic and using floating-point conversions depends on the specific requirements of the application, including its performance characteristics and the acceptable level of precision.
+
+```cpp
+/* OLD APPROACH */
+// Overloading arithmetic operator +
+Fixed Fixed::operator+(const Fixed &other) const
+{
+	Fixed result;
+	result.setRawBits(_rawBitsValue + other.getRawBits());
+	return result;
+}
+// Overloading arithmetic operator -
+Fixed Fixed::operator-(const Fixed &other) const
+{
+	Fixed result;
+	result.setRawBits(_rawBitsValue - other.getRawBits());
+	return result;
+}
+// Overloading arithmetic operator *
+Fixed Fixed::operator*(const Fixed &other) const
+{
+	Fixed fixedResult;
+	long long int thisRawLong = static_cast<long long int>(_rawBitsValue);
+	long long int otherRawLong = static_cast<long long int>(other.getRawBits());
+	long long int multipliedValue = (thisRawLong * otherRawLong);
+	long long int scaledResult = multipliedValue >> _fractionalBits;
+	int result = static_cast<int>(scaledResult);
+	fixedResult.setRawBits(result);
+	return fixedResult;
+}
+// Overloading arithmetic operator /
+Fixed Fixed::operator/(const Fixed &other) const
+{
+	// Check for division by zero
+	if (other.getRawBits() == 0)
+	{
+		// Handle division by zero error or throw an exception
+		std::cerr << "Error: Division by zero." << std::endl;
+		return Fixed(); // or handle differently
+	}
+	Fixed fixedResult;
+	// Scale up the dividend by the number of fractional bits
+	long long int thisRawLong = static_cast<long long int>(_rawBitsValue) << _fractionalBits;
+	// Convert divisor to long long
+	long long int otherRawLong = static_cast<long long int>(other.getRawBits());
+	// Perform the division
+	long long int dividedValue = thisRawLong / otherRawLong;
+	int result = static_cast<int>(dividedValue);
+	fixedResult.setRawBits(result);
+	return fixedResult;
+}
+```
 
 **Why we need a const and a not const version of the min and max functions**
 

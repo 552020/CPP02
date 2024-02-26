@@ -3,7 +3,7 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Target executable name
-TARGET = fixed 
+TARGET = now_we_are_talking 
 
 # Source and Object Files
 SRCS = main.cpp Fixed.cpp 
