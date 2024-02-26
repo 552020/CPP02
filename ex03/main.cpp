@@ -1,78 +1,89 @@
 #include <iostream>
-#include <cstdlib> // For std::atof
 #include "Point.hpp"
+#include "Fixed.hpp"
 
-// Function to print test results
-void printTestResult(int testNumber, const Point &a, const Point &b, const Point &c, const Point &point, bool result)
+bool bsp(Point const a, Point const b, Point const c, Point const point);
+
+class Triangle
 {
-	std::cout << "Test " << testNumber << ": Checking point (" << point.getX().toFloat() << ", "
-			  << point.getY().toFloat() << ")";
-	std::cout << " with triangle ((" << a.getX().toFloat() << ", " << a.getY().toFloat() << "), ";
-	std::cout << "(" << b.getX().toFloat() << ", " << b.getY().toFloat() << "), ";
-	std::cout << "(" << c.getX().toFloat() << ", " << c.getY().toFloat() << ")) - ";
-	std::cout << (result ? "Inside" : "Outside or On Edge") << std::endl;
+  private:
+	Point _a;
+	Point _b;
+	Point _c;
+
+  public:
+	Triangle() {};
+	Triangle(Point const &a, Point const &b, Point const &c) : _a(a), _b(b), _c(c)
+	{
+	}
+	~Triangle()
+	{
+	}
+	Triangle(Triangle const &other) : _a(other._a), _b(other._b), _c(other._c)
+	{
+	}
+	Triangle &operator=(Triangle const &other)
+	{
+		if (this != &other)
+		{
+			this->_a = other._a;
+			this->_b = other._b;
+			this->_c = other._c;
+		}
+		return *this;
+	}
+	Point const &getA() const
+	{
+		return _a;
+	}
+	Point const &getB() const
+	{
+		return _b;
+	}
+	Point const &getC() const
+	{
+		return _c;
+	}
+};
+
+void testPointInside(Triangle const &t, Point const *points, int const size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		std::cout << "Point "
+				  << "(" << points[i].getX() << ", " << points[i].getY() << ")"
+				  << " is "
+				  << (bsp(t.getA(), t.getB(), t.getC(), points[i]) ? "inside: TEST PASSED!" : "outside: TEST FAILED!")
+				  << std::endl;
+	}
 }
 
-// int main()
-// {
-// 	// Define triangle vertices
-// 	Point a(0.0f, 0.0f);
-// 	Point b(0.0f, 1.0f);
-// 	Point c(1.0f, 0.0f);
-
-// 	// Test points
-// 	Point insidePoint(0.2f, 0.2f);
-// 	Point outsidePoint(1.0f, 1.0f);
-// 	Point onEdgePoint(0.5f, 0.5f);
-// 	Point vertexPoint = a; // One of the vertices of the triangle
-
-// 	// Perform tests
-// 	bool result;
-
-// 	result = bsp(a, b, c, insidePoint);
-// 	printTestResult(1, a, b, c, insidePoint, result);
-
-// 	result = bsp(a, b, c, outsidePoint);
-// 	printTestResult(2, a, b, c, outsidePoint, result);
-
-// 	result = bsp(a, b, c, onEdgePoint);
-// 	printTestResult(3, a, b, c, onEdgePoint, result);
-
-// 	result = bsp(a, b, c, vertexPoint);
-// 	printTestResult(4, a, b, c, vertexPoint, result);
-
-// 	// Add more tests as needed
-
-// 	return 0;
-// }
-
-int main(int argc, char *argv[])
+void testPointOutside(Triangle const &t, Point const *points, int const size)
 {
-	if (argc != 9)
+	for (int i = 0; i < size; i++)
 	{
-		std::cerr << "Usage: " << argv[0] << " Ax Ay Bx By Cx Cy Px Py" << std::endl;
-		return -1; // Changed to return a non-zero value to indicate error in usage.
+		std::cout << "Point "
+				  << "(" << points[i].getX() << ", " << points[i].getY() << ")"
+				  << " is "
+				  << (!bsp(t.getA(), t.getB(), t.getC(), points[i]) ? "outside: TEST PASSED!" : "inside: TEST FAILED!")
+				  << std::endl;
 	}
+}
 
-	// Convert arguments to float and create Points
-	float Ax = std::atof(argv[1]), Ay = std::atof(argv[2]);
-	float Bx = std::atof(argv[3]), By = std::atof(argv[4]);
-	float Cx = std::atof(argv[5]), Cy = std::atof(argv[6]);
-	float Px = std::atof(argv[7]), Py = std::atof(argv[8]);
+int main(void)
+{
+	Triangle t(Point(0, 0), Point(10, 00), Point(00, 10));
 
-	Point A(Ax, Ay), B(Bx, By), C(Cx, Cy), P(Px, Py);
+	std::cout << "The triangle coordinates are: " << std::endl;
+	std::cout << "A: " << t.getA().getX() << ", " << t.getA().getY() << std::endl;
+	std::cout << "B: " << t.getB().getX() << ", " << t.getB().getY() << std::endl;
+	std::cout << "C: " << t.getC().getX() << ", " << t.getC().getY() << std::endl;
 
-	// Check if P is inside triangle ABC
-	if (bsp(A, B, C, P))
-	{
-		std::cout << "Point (" << Px << ", " << Py << ") is inside the triangle." << std::endl;
-		return 1; // Point is inside
-	}
-	else
-	{
-		std::cout << "Point (" << Px << ", " << Py << ") is outside the triangle or on an edge." << std::endl;
-		return 0; // Point is outside or on an edge
-	}
+	Point pointsInside[] = {Point(1, 1), Point(2, 2), Point(3, 3), Point(1, 8)};
+	Point pointsOutside[] = {Point(100, 100), Point(100, 200), Point(200, 100), Point(100, 100)};
 
-	return 0;
+	std::cout << "Testing points inside the triangle" << std::endl;
+	testPointInside(t, pointsInside, 4);
+	std::cout << "Testing points outside the triangle" << std::endl;
+	testPointOutside(t, pointsOutside, 4);
 }

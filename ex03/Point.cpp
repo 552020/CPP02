@@ -47,35 +47,3 @@ Fixed const &Point::getY() const
 }
 
 // Helper function to calculate area of a triangle given its vertices
-Fixed area(Point const &a, Point const &b, Point const &c)
-{
-	// Step 1: Calculate the components of the formula
-	float aComponent = a.getX().toFloat() * (b.getY().toFloat() - c.getY().toFloat());
-	float bComponent = b.getX().toFloat() * (c.getY().toFloat() - a.getY().toFloat());
-	float cComponent = c.getX().toFloat() * (a.getY().toFloat() - b.getY().toFloat());
-
-	// Step 2: Calculate the sum of components
-	float sumOfComponents = aComponent + bComponent + cComponent;
-
-	// Step 3: Calculate the absolute value and divide by 2 to get the area
-	float areaValue = std::abs(sumOfComponents) / 2.0f;
-
-	// Step 4: Convert the area value to Fixed and return
-	return Fixed(areaValue);
-}
-
-// Function to determine if a point is inside a triangle
-bool bsp(Point const a, Point const b, Point const c, Point const point)
-{
-	// Calculate the area of the original triangle ABC
-	Fixed areaABC = area(a, b, c);
-	// Calculate the area of the three triangles PAB, PBC, and PAC
-	Fixed areaPAB = area(point, a, b);
-	Fixed areaPBC = area(point, b, c);
-	Fixed areaPAC = area(point, a, c);
-
-	// Sum of areas of PAB, PBC, and PAC
-	Fixed totalArea = areaPAB + areaPBC + areaPAC;
-
-	return areaABC == totalArea;
-}

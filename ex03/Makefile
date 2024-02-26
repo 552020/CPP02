@@ -6,7 +6,7 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 TARGET = bsp
 
 # Source and Object Files
-SRCS = main.cpp Fixed.cpp Point.cpp
+SRCS = main.cpp Fixed.cpp Point.cpp bsp.cpp
 
 # Create an obj directory if it doesn't exist
 OBJDIR = obj
