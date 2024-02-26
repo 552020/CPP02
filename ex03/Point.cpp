@@ -8,18 +8,20 @@ Point::Point(const float x, const float y) : _x(x), _y(y)
 Point::Point(const Point &other) : _x(other._x), _y(other._y)
 {
 }
-// This will throw an error because the we try to change the value of a const member
-// Point &Point::operator=(const Point &other)
-// {
-// 	if (this != &other)
-// 	{
-// 		this->_x = other._x;
-// 		this->_y = other._y;
-// 	}
-// 	return *this;
-// }
-// This is the correct way to implement the copy assignment operator but actually it makes more sense not to implement
-// it at all
+/* COPY ASSIGNMENT OPERATOR STANDARD
+This will throw an error because the we try to change the value of a const member: _x and _y are const members!
+
+Point &Point::operator=(const Point &other)
+{
+	if (this != &other)
+	{
+		this->_x = other._x;
+		this->_y = other._y;
+	}
+	return *this;
+}
+ */
+/* COPY ASSIGNMENT OPERATOR WOKRAROUND */
 Point &Point::operator=(const Point &other)
 {
 	if (this != &other)
@@ -31,12 +33,9 @@ Point &Point::operator=(const Point &other)
 	}
 	return *this;
 }
-// Destructor
 Point::~Point()
 {
 }
-
-// Getters for x and y
 Fixed const &Point::getX() const
 {
 	return _x;
