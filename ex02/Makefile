@@ -6,7 +6,7 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 TARGET = now_we_are_talking 
 
 # Source and Object Files
-SRCS = main.cpp Fixed.cpp 
+SRCS = main.cpp Fixed.cpp tests.cpp
 
 # Create an obj directory if it doesn't exist
 OBJDIR = obj

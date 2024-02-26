@@ -1,11 +1,12 @@
 #include <iostream>
 #include <math.h>
 
+#define FRAC_BITS 8
 class Fixed
 {
   private:
 	int _rawBitsValue;
-	static const int _fractionalBits = 8;
+	static const int _fractionalBits = FRAC_BITS;
 
   public:
 	// Default constructor

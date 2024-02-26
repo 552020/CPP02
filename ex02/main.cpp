@@ -1,6 +1,8 @@
 #include "Fixed.hpp"
 #include <iostream>
 
+void tests();
+
 int main(void)
 {
 	Fixed a;
@@ -15,5 +17,6 @@ int main(void)
 	std::cout << b << std::endl;
 
 	std::cout << Fixed::max(a, b) << std::endl;
+	tests();
 	return (0);
 }
