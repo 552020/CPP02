@@ -25,7 +25,7 @@ The main.cpp is given, in the subject.
 - [Copy assignment operator](<https://en.wikipedia.org/wiki/Assignment_operator_(C%2B%2B)>)
 - [Destructor](<https://en.wikipedia.org/wiki/Destructor_(computer_programming)>)
 
-### static const int \_fractionalBits
+### `static const int _fractionalBits`
 
 We are required to define the number of fractional bits as `static const int`. If the fractional bits were not declared as static within the Fixed class, it would imply that each instance of the Fixed class could potentially have its own value for fractional bits.
 
@@ -34,6 +34,40 @@ The **static** keyword in C++ indicates that the member variable or method belon
 A static member variable is shared among all instances of the class. It exists independently of any class instances, meaning that it is created when the program starts and destroyed when the program ends, regardless of whether any objects of the class are created or destroyed in the meantime.
 
 static member variables and methods can be accessed using the class name instead of an instance of the class.
+
+### Constructor from a const float
+
+```cpp
+Fixed::Fixed(const float value)
+{
+	std::cout << "Float constructor called" << std::endl;
+
+	_fixedValue = roundf(value * (1 << _fractionalBits));
+}
+```
+
+**Implicit conversion**
+We could explicitly convert the float to an int with `static_cat<type>` `_fixedValue = static_cast<int>(roundf(floatValue _ (1 << FRAC_BITS)));` but it is not necessary.
+**1 << \_fractionalBits** since fractionalBits is a constant (8) we can use it directly the resutl of 1 << 8 or 256
+**roundf** rounds to the nearest integer value, rounding halfway cases away from zero, regardless of the current rounding Practical example: `0.1 \ 256 = 25.6`, which is rounded to 26 with roundf. Otherwise we would have 25 as result.
+**scaling factor** `1 << _fractionalBits` is the scaling factor. It is used to convert the float value to a fixed-point value. The idea behing is that since we can't bit shift the floating point number we multiply it for the scaling factor. To bitshift a number to the left by 8 means to multiply it by 2^8 = 256. Shifting by 1 means multiply by 2\*1 = 2. 1 (bin) << 1 = 10 (bin) which means 1 (dec) << 1 = 2 (dec). While conceptually, shifting a binary floating-point number to the left by the number of fractional bits (e.g., 8 bits) would simulate converting it to a
+fixed-point representation (scaling the value by 2^8), in actual C++ code, floating-point numbers cannot be shifted due to their internal IEEE-754 representation. Instead, we multiply by the corresponding power of 2 to achieve the same effect. For instance, instead of shifting 1.5 (decimal) by 8 bits to the left, which is not possible in code, we multiply 1.5 by 2^8 (256) to convert it to a fixed-point representation where the fractional part is scaled up and stored as an integer.\*/
+
+### toFloat converstion method
+
+`float Fixed::toFloat(void) const`
+
+```cpp
+// convert the fixed point value to a floating point value.
+float Fixed::toFloat(void) const {
+  return (float)_fixedValue / (1 << _fractionalBits);
+}
+
+// second implementation
+float Fixed::toFloat(void) const {
+  return static_cast<float>(_fixedValue) / (1 << _fractionalBits);
+}
+```
 
 ## 02 Towards a more useful fixed-point number class
 
