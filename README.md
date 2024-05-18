@@ -1,5 +1,7 @@
 # CPP02
 
+**C++ module for the core curriculum @42Berlin**
+
 - Ad-hoc polymorphism
 - operator overloading
 - Orthodox Canonical Form
