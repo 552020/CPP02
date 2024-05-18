@@ -1,4 +1,4 @@
-# CPP_Module_02
+# CPP02
 
 - Ad-hoc polymorphism
 - operator overloading
